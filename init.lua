@@ -17,10 +17,7 @@ function fell_tree(pos, oldnode, player)
 		minetest.node_dig(pos, oldnode, player) 
 		
 		
-		while name == trunk_name and height < 14 do
-			height = height + 1
-			pos.y = pos.y + 1
-			name = minetest.get_node(pos).name
+		repeat 
 			local itemstacks = minetest.get_node_drops(name)
 			for _, itemname in ipairs(itemstacks) do
 				minetest.add_item(pos, itemname)
@@ -28,7 +25,12 @@ function fell_tree(pos, oldnode, player)
 			minetest.set_node(pos, {name="air"})
 			print(name .. " = " .. trunk_name)
 			print(height)
-		end 
+
+			height = height + 1
+			pos.y = pos.y + 1
+			name = minetest.get_node(pos).name
+
+		until name ~= trunk_name or height >= 14 
 		
 
 		
